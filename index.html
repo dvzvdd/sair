@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button id="btnOpenAdmin" class="admin-trigger-btn" title="Área do Organizador">Admin</button>
+
+  <div class="card-shell" id="cardContainer">
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="step1" class="step active">
+      <span class="eyebrow">UM CONVITE</span>
+      
+      <div class="cat-avatar">
+        <img src="IMG_1923.jpg" alt="Gatinho fofo de chapéu">
+      </div>
+
+      <h1 class="display">Você aceita sair comigo?</h1>
+      <p class="subtitle">A vontade pra responder 👀</p>
+
+      <div class="btn-group-step1">
+        <button class="btn-primary" id="btnYes">Sim, aceito!</button>
+        <button class="btn-no" id="btnNo">Não</button>
+      </div>
+    </div>
+
+    <div id="step2" class="step hidden">
+      <span class="eyebrow">PASSO 2 DE 3</span>
+      <h1 class="display">Quase lá...</h1>
+      <div class="field-group">
+        <label for="datetimeInput">QUE DIA VOCÊ ESTÁ LIVRE?</label>
+        <input type="datetime-local" id="datetimeInput" class="input-field">
+      </div>
+
+      <button class="btn-primary" id="btnGoToStep3" style="width: 100%;">Continuar</button>
+    </div>
+
+    <div id="step3" class="step hidden">
+      <span class="eyebrow">PARTE SÉRIA DA NOITE</span>
+      <h1 class="display">O que você quer comer?</h1>
+      <p class="subtitle">Escolha o que/onde quer comer.</p>
+
+      <div class="food-grid">
+        <div class="food-card option-card" data-category="Comida" data-value="Pizza">
+          <span class="food-name">Pizzaria</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Sushi">
+          <span class="food-name">Restaurante</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Cachorro-quente">
+          <span class="food-name">Hamburgueria</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Lanche / Hambúrguer">
+          <span class="food-name">Típica Brasileira</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Carne / Churrasco">
+          <span class="food-name">Comida Mexicana</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Comida Italiana">
+          <span class="food-name">Italiano</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Japonês Quente">
+          <span class="food-name">Japonês</span>
+        </div>
+        <div class="food-card option-card" data-category="Comida" data-value="Doce e Café">
+          <span class="food-name">Cafeteria</span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="obsInput">ALGUM LOCAL DE PREFERÊNCIA?</label>
+        <textarea id="obsInput" class="input-field textarea-field" placeholder="Escreva aqui..."></textarea>
+      </div>
+
+      <div class="btn-group-step3">
+        <button class="btn-secondary" id="btnBackToStep2">Voltar</button>
+        <button class="btn-primary" id="btnConfirm" style="flex: 2;">Confirmar encontro </button>
+      </div>
+    </div>
+
+    <div id="stepFinal" class="step hidden">
+      <div style="font-size: 3.5rem; margin-bottom: 0.5rem;"></div>
+      <span class="eyebrow">TUDO PRONTO!</span>
+      <h1 class="display">Encontro marcado!</h1>
+      <p class="subtitle">Mal posso esperar! <br>Clique no botão abaixo e mande a confirmação pelo whatsapp.</p>
+
+      <button class="btn-primary" id="btnWhatsapp" style="width: 100%; font-size: 1.1rem; padding: 1rem;">Enviar no whatsapp </button>
+    </div>
+  </div>
+
+  <div id="adminModal" class="admin-modal hidden">
+    <div class="admin-modal-content">
+      <button id="btnCloseAdmin" class="close-modal-btn">&times;</button>
+      
+      <div id="adminLoginView">
+        <span class="eyebrow">ÁREA RESTRITA</span>
+        <h2 class="display" style="font-size: 1.4rem;">Acesso do Criador</h2>
+        <p class="subtitle" style="margin-bottom: 1rem;">Digite sua senha para visualizar as respostas salvas.</p>
+        
+        <div class="field-group">
+          <input type="password" id="adminPasswordInput" class="input-field" placeholder="Digite a senha...">
+        </div>
+        <button id="btnLoginAdmin" class="btn-primary" style="width: 100%;">Acessar Painel</button>
+      </div>
+
+      <div id="adminDashboardView" class="hidden">
+        <span class="eyebrow">PAINEL PRIVADO</span>
+        <h2 class="display" style="font-size: 1.4rem;">Respostas Recebidas</h2>
+        <div id="responsesContainer" class="responses-list">
+
+        </div>
+        <button id="btnClearResponses" class="btn-secondary" style="width: 100%; margin-top: 1rem; color: #b91c1c; border-color: #fca5a5;">Limpar Histórico</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
